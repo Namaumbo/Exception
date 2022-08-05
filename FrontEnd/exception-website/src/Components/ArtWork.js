@@ -128,7 +128,7 @@ export default function ArtWork() {
             marginRight: "250px",
           }}
         />
-        <Pagination
+        <Pagination 
           defaultActivePage={5}
           ellipsisItem={{
             content: <Icon name="ellipsis horizontal" />,
