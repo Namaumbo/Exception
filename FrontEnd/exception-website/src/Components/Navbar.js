@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Input, Menu, Image, Icon, Button, Segment } from "semantic-ui-react";
-import ExceptionalLogo from "../Asserts/Logo.png";
+import {Menu, Button, Segment } from "semantic-ui-react";
+// import ExceptionalLogo from "../Asserts/Logo.png";
 
 export default class MenuExampleSecondary extends Component {
   state = { activeItem: "home" };
@@ -41,8 +41,4 @@ export default class MenuExampleSecondary extends Component {
   }
 }
 
-{
-  /*
-{/* 
-*/
-}
+

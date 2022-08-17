@@ -3,11 +3,44 @@ import { Grid, Image, Button, Icon, Pagination } from "semantic-ui-react";
 import photo1 from "../Asserts/photo1.jpg";
 import photo2 from "../Asserts/photo2.jpg";
 import photo3 from "../Asserts/photo3.jpg";
+import { getStorage, ref, listAll, getDownloadURL } from "firebase/storage";
+import app from "./firebase";
+
 
 export default function ArtWork() {
+  const listItem = () => {
+    // listing all the Audios
+    const storage = getStorage();
+    const starsRef = ref(storage, "luckyOnes.mp3");
+    // Get the download URL
+    getDownloadURL(starsRef)
+      .then((url) => {
+        console.log(url);
+      })
+      .catch((error) => {
+        switch (error.code) {
+          case "storage/object-not-found":
+            console.log("nothing");
+            break;
+          case "storage/unauthorized":
+            console.log("unauthorized");
+            break;
+          case "storage/canceled":
+            console.log("canceled requests");
+            break;
+          case "storage/unknown":
+            console.log("unknown one");
+            break;
+        }
+      });
+  };
+
   return (
     <>
       <div>
+        <Button positive onClick={listItem}>
+          list all the songs
+        </Button>
         <Grid centered="true" container="true">
           <Grid.Row columns={4}>
             <Grid.Column>
@@ -22,7 +55,6 @@ export default function ArtWork() {
                 <Image src={photo1} alt="photo1" width="200px" />
               </div>
               <p>Playing- Austin Oaks</p>
-
               {/* buttons */}
               <Button
                 compact
@@ -128,7 +160,7 @@ export default function ArtWork() {
             marginRight: "250px",
           }}
         />
-        <Pagination 
+        <Pagination
           defaultActivePage={5}
           ellipsisItem={{
             content: <Icon name="ellipsis horizontal" />,
