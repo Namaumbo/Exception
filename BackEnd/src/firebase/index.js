@@ -3,7 +3,7 @@ import { getStorage, ref, listAll } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  // my configs
+
 };
 
 // Initialize Firebase
