@@ -21,10 +21,6 @@ module.exports = {
       email: {
         type: DataTypes.STRING
       },
-      genre: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE

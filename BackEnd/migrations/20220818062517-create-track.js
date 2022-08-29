@@ -1,44 +1,50 @@
-'use strict';
-const {DataType} = require("sequelize")
+"use strict";
+const { DataType, DataTypes } = require("sequelize");
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Tracks', {
+    await queryInterface.createTable("Tracks", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
       },
-      artists: {
+      title: {
         type: DataTypes.STRING,
+        min: 3,
+        max: 256,
         allowNull: false,
       },
-      type: {
-        type: DataTypes.STRING
+      genre: {
+        type: DataTypes.STRING,
       },
       artwork: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
-      URL: {
+      url: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      album:{
+      album: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      releasedate: {
+        type: DataTypes.DATEONLY,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: DataTypes.DATE
-      }
+        type: DataTypes.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Tracks');
-  }
+    await queryInterface.dropTable("Tracks");
+  },
 };

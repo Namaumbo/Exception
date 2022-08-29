@@ -1,7 +1,7 @@
-const dbConnection = require("../DatabaseConnection");
+const connection = require("../dbConnection");
 const DataTypes = require("sequelize");
 
-const Student = dbConnection.define(
+const User = connection.define(
   "User",
   {
     // Model attributes are defined here
