@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Grid, Image, Button, Icon, Pagination } from "semantic-ui-react";
 import photo1 from "../Asserts/photo1.jpg";
-import photo2 from "../Asserts/photo2.jpg";
-import photo3 from "../Asserts/photo3.jpg";
 import { getStorage, ref, listAll, getDownloadURL } from "firebase/storage";
 import app from "./firebase";
 
@@ -12,19 +10,19 @@ export default function ArtWork() {
 
   const listItem = () => {
     const storage = getStorage();
-    const starsRef = ref(storage, "/");
+    const starsRef = ref(storage, "Excepcion-Music-track");
 
     // listing all files in the storage
     setLinks(links);
-    console.log(links)
+
     listAll(starsRef)
       .then((res) => {
         res.items.forEach((folderRef) => {
           getDownloadURL(folderRef).then((ress) => {
-            links.push(ress)
+            links.push(ress);
           });
           // links.push(getDownloadURL(folderRef))
-            });
+        });
       })
       .catch((error) => {
         switch (error.code) {
@@ -46,9 +44,6 @@ export default function ArtWork() {
   return (
     <>
       <div>
-        <Button positive onClick={listItem}>
-          list all the songs
-        </Button>
         <Grid centered="true" container="true">
           <Grid.Row columns={4}>
             <Grid.Column>
@@ -72,13 +67,11 @@ export default function ArtWork() {
                 size="mini"
               >
                 <Icon name="play" />
-                PLAY
-              </Button>
+                </Button>
               <Button compact color="orange" size="mini">
                 DOWNLOAD NOW
               </Button>
             </Grid.Column>
-           
           </Grid.Row>
         </Grid>
         <hr
@@ -88,9 +81,7 @@ export default function ArtWork() {
             marginRight: "250px",
           }}
         />
-       {
-        linked
-       }
+        {linked}
         <Pagination
           defaultActivePage={5}
           ellipsisItem={{
