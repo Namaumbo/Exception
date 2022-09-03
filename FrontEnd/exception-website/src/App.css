@@ -1,28 +1,16 @@
-.App {
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  height: 100vh;
-  background: rgba(194, 233, 251, 1);
-  background: radial-gradient(
-    circle,
-    rgba(161, 196, 253, 1) 10%,
-    rgba(194, 233, 251, 1) 100%
-  );
-}
+
 .progress-bar {
   width: 400px;
-  height: 15px;
-  background-color: white;
+  height: 5px;
+  margin: 0 auto;
+  background-color: rgb(164, 223, 231);
   margin-bottom: 50px;
 }
 .progress-bar div {
   width: 25%;
   height: 100%;
-  background-color: rgb(98, 0, 255);
+  margin: 0 auto;
+  background-color: rgb(221, 129, 8);
 }
 .card {
   width: 400px;
