@@ -1,4 +1,4 @@
-// import AdminPanel from "./Components/AdminPanel";
+import AdminPanel from "./Components/AdminPanel";
 // import ArtWork from "./Components/ArtWork";
 import Footer from "./Components/Footer";
 import Navbar from "./Components/Navbar";
@@ -13,8 +13,8 @@ function App() {
     <div className="App">
       <Navbar />
       {/* <ArtWork /> */}
-      {/* <AdminPanel/> */}
-      <SongUpload />
+      <AdminPanel/>
+      {/* <SongUpload /> */}
       {/* <Playing/> */}
       <br />
       <br /> <Footer />

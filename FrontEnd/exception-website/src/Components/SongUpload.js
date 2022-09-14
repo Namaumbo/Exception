@@ -1,22 +1,23 @@
-import React from "react";
-import CoverPic from "./Upload components/CoverPic";
+import SongDetails from "./Upload components/SongDetails";
 import TrackInfo from "./Upload components/TrackInfo";
-import { useState } from "react";
+import { useState,React  } from "react";
 import "../App.css";
+import Track from "./Upload components/Track";
 
 const SongUpload = () => {
   const [formData, setFormData] = useState({
-    fullname: "",
-    username: "",
-    password: "",
+    title: "",
+    album: "",
+    year: "",
     nickname: "",
+    artist:""
 
   });
   const [x, setX] = useState(0);
 
   const [page, setPage] = useState(0);
   const componentList = [
-    <CoverPic
+    <SongDetails
       page={page}
       setPage={setPage}
       formData={formData}
@@ -32,13 +33,22 @@ const SongUpload = () => {
       x={x}
       setX={setX}
     />,
+    <Track
+    page={page}
+    setPage={setPage}
+    formData={formData}
+    setFormData={setFormData}
+    x={x}
+    setX={setX}
+    
+    />
   ];
   return (
     <>
       <div className="adminContainer">
         <div className="progress-bar">
           <div
-            style={{ width: page === 0 ? "0%" : page === 1 ? "100%" : "100%" }}
+            style={{ width: page === 0 ? "0%" : page === 1 ? "50%" : page === 2 ? "100%" : "0%" }}
           ></div>
         </div>
         <div>{componentList[page]}</div>

@@ -1,20 +1,36 @@
 import React, { useState } from "react";
-import { Input, Button, Progress } from "semantic-ui-react";
+import {
+  Input,
+  Button,
+  Progress,
+  Card,
+  Header,
+  Label,
+  Message,
+} from "semantic-ui-react";
 import axios from "axios";
+import "../App.css";
 import {
   getStorage,
   ref,
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+import * as firebase from "./firebase";
 
 export default function AdminPanel() {
   // files uploading
-  const [progress, setProgress] = useState(0);
+  const [progPerce, setProgress] = useState(0);
   const [albumName, setAlbumNameValue] = useState("");
   const [genreType, setGenreTypeValue] = useState("");
   const [title, setTitleValue] = useState("");
   const [releaseDate, setReleaseDate] = useState("");
+  const [file, setFile] = useState();
+  const [ButtonState, setButtonState] = useState(true);
+
+  const setFileName = (e) => {
+  setFile(e.target.files[0]);    
+  };
 
   const setAlbumName = (e) => {
     setAlbumNameValue(e.target.value);
@@ -33,8 +49,15 @@ export default function AdminPanel() {
 
   const sendFile = (e) => {
     e.preventDefault();
-    const file = e.target[0].files[0];
     uploadFile(file);
+  };
+
+  const checkForEmptyness = () => {
+    if ((albumName&&genreType&&title&&releaseDate) === '') {
+      alert("please complete all fields")
+    } else {
+      setButtonState(false)
+    }
   };
 
   const uploadFile = (file) => {
@@ -57,7 +80,6 @@ export default function AdminPanel() {
       }
     );
   };
-
   const saveDetails = async (link) => {
     const data = {
       genre: genreType,
@@ -78,60 +100,133 @@ export default function AdminPanel() {
   return (
     <>
       <div>
-        {" "}
-        <label>Enter Track Details</label> <br />
-        <br />
-        <form onSubmit={sendFile}>
-          <input type="file" />
+        <Card
+          style={{
+            width: "400px",
+            backgroundColor: "white",
+            border: "1px solid #333",
+            borderRadius: "0.5rem",
+            padding: "0.5rem",
+            maxWidth: "500px",
+            margin: "0 auto",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          {" "}
+          <Header
+            as="h2"
+            style={{
+              fontSize: "2rem",
+              fontWeight: "bolder",
+              textAlign: "center",
+            }}
+          >
+            Enter Track Details
+          </Header>{" "}
           <br />
           <br />
+          <form onSubmit={sendFile}>
+            {/* title */}
+            <Label pointing="below" content="Enter Title" />
+            <br />
+            <Input
+              icon="font"
+              iconPosition="left"
+              placeholder="track title"
+              value={title}
+              onChange={setTitleName}
+            />
+            <br />
+            <br />
+            {/* album */}
+            <Label pointing="below" content="Enter Album Name" />
+            <br />
+            <Input
+              icon="address card outline"
+              iconPosition="left"
+              placeholder="Album Name"
+              value={albumName}
+              onChange={setAlbumName}
+            />
+            <br />
+            <br />
+            {/* date */}
+            <Label pointing="below" content="Choose year of release" />
+            <br />
+            <Input
+              placeholder="Release Date"
+              value={releaseDate}
+              iconPosition="left"
+              icon="calendar"
+              onChange={setDate}
+              type="date"
+            />
+            <br />
+            <br />
 
-          <Input
-            icon="image"
-            iconPosition="right"
-            type="file"
-            accept=".jpg, .jpeg, .png"
+            {/* genre */}
+            <Label pointing="below" content="Enter Genre" />
+            <br />
+            <Input
+              icon="image"
+              iconPosition="left"
+              placeholder="Genre Type"
+              value={genreType}
+              onChange={setGenreName}
+            />
+            <br />
+            <br />
+            <Label pointing="below" content="Choose the music file" />
+
+            <Input
+              icon="music"
+              iconPosition="left"
+              type="file"
+              onChange={checkForEmptyness || setFileName }
+            />
+            <br />
+            <br />
+            {/* <Label pointing="below" content="Ent" color="orange" />
+            <Input
+              icon="image"
+              iconPosition="right"
+              type="file"
+              accept=".jpg, .jpeg, .png"
+            />
+            <br />
+            <br /> */}
+            <Message
+              content="please cross check and artwork will be required later"
+              color="red"
+            ></Message>
+            <div
+              style={{
+                contntAlign: "center",
+              }}
+            >
+              <Button
+                type="submit"
+                color="orange"
+                icon="upload"
+                disabled={ButtonState}
+                fluid
+                size="small"
+              />
+              {/* <Button icon="times" color="red"/> */}
+            </div>
+          </form>
+          <br />
+          <Progress
+            percent={progPerce}
+            indicating
+            size="small"
+            color="green"
+            progress
           />
-          <br />
-          <br />
-          <Input
-            placeholder="Release Date"
-            value={releaseDate}
-            onChange={setDate}
-            type="date"
-          />
-          <br />
-          <br />
-          <Input
-            icon="address card outline"
-            iconPosition="right"
-            placeholder="Album Name"
-            value={albumName}
-            onChange={setAlbumName}
-          />
-          <br />
-          <br />
-          <Input
-            icon="image"
-            iconPosition="right"
-            placeholder="Genre Type"
-            value={genreType}
-            onChange={setGenreName}
-          />
-          <br />
-          <br />
-          <Input
-            icon="font"
-            iconPosition="right"
-            placeholder="track title"
-            value={title}
-            onChange={setTitleName}
-          />
-          <br />
-          <br />
-          <Button type="submit" color="orange" icon="cloud"></Button>
-        </form>
-        <Progress percent={progress} indicating />
+        </Card>
+        \
+        <br />
       </div>
     </>
   );

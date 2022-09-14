@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Button, Input } from "semantic-ui-react";
-const CoverPic = ({ page, setPage, formData, setFormData, x, setX }) => {
+const SongDetails = ({ page, setPage, formData, setFormData, x, setX }) => {
   return (
     <>
       <motion.div
@@ -14,31 +14,41 @@ const CoverPic = ({ page, setPage, formData, setFormData, x, setX }) => {
           <Input
             focus
             type="text"
-            placeholder="Full Name"
+            placeholder="Title"
             className="form-group"
-            value={formData.fullName} //setting the value of the form to the props value
+            value={formData.title} //setting the value of the form to the props value
             onChange={
-              (e) => setFormData({ ...formData, fullName: e.target.value }) //setting the formData to the value input of the textfield
+              (e) => setFormData({ ...formData, title: e.target.value }) //setting the formData to the value input of the textfield
             }
           />
           <Input
             focus
             type="text"
             className="form-group"
-            placeholder="Username"
-            value={formData.username}
+            placeholder="Album"
+            value={formData.album}
             onChange={(e) =>
-              setFormData({ ...formData, username: e.target.value })
+              setFormData({ ...formData, album: e.target.value })
             }
           />
           <Input
             focus
             type="text"
             className="form-group"
-            placeholder="Password"
-            value={formData.password}
+            placeholder="year of release"
+            value={formData.year}
             onChange={(e) =>
-              setFormData({ ...formData, password: e.target.value })
+              setFormData({ ...formData, year: e.target.value })
+            }
+          />
+           <Input
+            focus
+            type="text"
+            className="form-group"
+            placeholder="Artist"
+            value={formData.artist}
+            onChange={(e) =>
+              setFormData({ ...formData, artist: e.target.value })
             }
           />
           <Button
@@ -56,4 +66,4 @@ const CoverPic = ({ page, setPage, formData, setFormData, x, setX }) => {
   );
 };
 
-export default CoverPic;
+export default SongDetails;
