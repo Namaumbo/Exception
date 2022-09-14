@@ -20,7 +20,7 @@ import * as firebase from "./firebase";
 
 export default function AdminPanel() {
   // files uploading
-  const [progPerce, setProgress] = useState(0);
+  const [progress, setProgress] = useState(0);
   const [albumName, setAlbumNameValue] = useState("");
   const [genreType, setGenreTypeValue] = useState("");
   const [title, setTitleValue] = useState("");
@@ -29,6 +29,7 @@ export default function AdminPanel() {
   const [ButtonState, setButtonState] = useState(true);
 
   const setFileName = (e) => {
+  checkForEmptyness ()
   setFile(e.target.files[0]);    
   };
 
@@ -48,8 +49,11 @@ export default function AdminPanel() {
   };
 
   const sendFile = (e) => {
-    e.preventDefault();
+   
     uploadFile(file);
+    e.preventDefault();
+    alert(file)
+ 
   };
 
   const checkForEmptyness = () => {
@@ -183,7 +187,7 @@ export default function AdminPanel() {
               icon="music"
               iconPosition="left"
               type="file"
-              onChange={checkForEmptyness || setFileName }
+              onChange={setFileName}
             />
             <br />
             <br />
@@ -218,7 +222,7 @@ export default function AdminPanel() {
           </form>
           <br />
           <Progress
-            percent={progPerce}
+            percent={progress}
             indicating
             size="small"
             color="green"
