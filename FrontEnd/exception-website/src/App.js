@@ -1,23 +1,26 @@
 import AdminPanel from "./Components/AdminPanel";
-// import ArtWork from "./Components/ArtWork";
 import Footer from "./Components/Footer";
 import Navbar from "./Components/Navbar";
-// import Playing from "./Components/Playing";
+import Playing from "./Components/Playing";
+import SongList from "./Components/SongList";
 
-import SongUpload from "./Components/SongUpload";
 
-// import Logo from "./Asserts/Logo.png"
+// import SongUpload from "./Components/SongUpload";
 
 function App() {
   return (
     <div className="App">
       <Navbar />
-      {/* <ArtWork /> */}
-      <AdminPanel/>
+      <br />
+      <br /> 
+ 
+    <SongList/>
+      {/* <AdminPanel/> */}
       {/* <SongUpload /> */}
       {/* <Playing/> */}
       <br />
-      <br /> <Footer />
+      <br /> 
+      <Footer />
     </div>
   );
 }

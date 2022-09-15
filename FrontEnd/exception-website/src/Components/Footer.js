@@ -3,7 +3,11 @@ import { Button, Segment, Input, Grid ,Icon} from "semantic-ui-react";
 
 const Footer = () => (
   <>
-    <Segment padded="very" tertiary >
+    <Segment padded="very" tertiary style={{     
+          bottom: "0",
+          width: "100%",
+      
+        }}  >
       <Grid columns="equal">
         <Grid.Column>1</Grid.Column>
         <Grid.Column width={8}>

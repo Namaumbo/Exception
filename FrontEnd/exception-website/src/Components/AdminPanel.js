@@ -29,8 +29,8 @@ export default function AdminPanel() {
   const [ButtonState, setButtonState] = useState(true);
 
   const setFileName = (e) => {
-  checkForEmptyness ()
-  setFile(e.target.files[0]);    
+    checkForEmptyness();
+    setFile(e.target.files[0]);
   };
 
   const setAlbumName = (e) => {
@@ -49,18 +49,15 @@ export default function AdminPanel() {
   };
 
   const sendFile = (e) => {
-   
-    uploadFile(file);
+    uploadFile(file); 
     e.preventDefault();
-    alert(file)
- 
   };
 
   const checkForEmptyness = () => {
-    if ((albumName&&genreType&&title&&releaseDate) === '') {
-      alert("please complete all fields")
+    if ((albumName && genreType && title && releaseDate) === "") {
+      alert("please complete all fields");
     } else {
-      setButtonState(false)
+      setButtonState(false);
     }
   };
 
