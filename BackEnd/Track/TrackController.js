@@ -1,10 +1,8 @@
 const Track = require("../models/track");
 
 exports.listFiles = async (req, res) => {
-  const {offsetValue} = req.params
+
   const allSongs = Track.findAndCountAll({
-    limit: 4,
-    offset: offsetValue,
     attributes: ["title", "releaseDate", "url"],
   });
   if ((await allSongs).length == 0) {

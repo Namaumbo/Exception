@@ -1,18 +1,21 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Icon, Pagination, Grid, Button, Image } from "semantic-ui-react";
+import { Grid, Button, Image } from "semantic-ui-react";
 import photo1 from "../Asserts/photo1.jpg";
+import Pagination from "./Pagination";
 
 export default function SongList() {
   const [songsArray, setSongsArray] = useState([]);
-  const [page, setPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [tracksPerPage] = useState(4);
+
   const handleChange = (offsetValue, value) => {
-    setPage(value);
+    setCurrentPage(value);
   };
 
   async function fetchData() {
     await axios
-      .get(`http://localhost:4000/api/songs/get-tracks?offset=${2}`)
+      .get(`http://localhost:4000/api/songs/get-tracks`)
       .then((response) => {
         setSongsArray(response.data.details.rows);
       })
@@ -23,11 +26,17 @@ export default function SongList() {
   useEffect(() => {
     fetchData();
   }, ["http://localhost:4000/api/songs/get-tracks"]);
+
+  const indexOfLastTrack = currentPage * tracksPerPage;
+  const indexOfFirstTrack = indexOfLastTrack - tracksPerPage;
+  const currentTracks = songsArray.slice(indexOfFirstTrack, indexOfLastTrack);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <>
       <Grid centered="true" container="true">
         <Grid.Row columns={4}>
-          {songsArray.map((track) => {
+          {currentTracks.map((track) => {
             return (
               <Grid.Column key={track.title}>
                 <div
@@ -62,22 +71,9 @@ export default function SongList() {
         }}
       />
       <Pagination
-        style={{
-          margin: "auto",
-          marginLeft: "33%",
-        }}
-        defaultActivePage={page}
-        onChange={handleChange}
-        ellipsisItem={{
-          content: <Icon name="ellipsis horizontal" />,
-          icon: true,
-        }}
-        variant="outlined"
-        firstItem={{ content: <Icon name="angle double left" />, icon: true }}
-        lastItem={{ content: <Icon name="angle double right" />, icon: true }}
-        prevItem={{ content: <Icon name="angle left" />, icon: true }}
-        nextItem={{ content: <Icon name="angle right" />, icon: true }}
-        totalPages={10}
+        postsPerPage={tracksPerPage}
+        totalPosts={songsArray.length}
+        paginate={paginate}
       />
     </>
   );

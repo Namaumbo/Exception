@@ -3,6 +3,7 @@ import Footer from "./Components/Footer";
 import Navbar from "./Components/Navbar";
 import Playing from "./Components/Playing";
 import SongList from "./Components/SongList";
+import "bootstrap/dist/css/bootstrap.min.css"
 
 
 // import SongUpload from "./Components/SongUpload";
