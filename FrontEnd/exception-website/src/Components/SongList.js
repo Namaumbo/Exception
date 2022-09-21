@@ -5,12 +5,16 @@ import photo1 from "../Asserts/photo1.jpg";
 
 export default function SongList() {
   const [songsArray, setSongsArray] = useState([]);
+  const [page, setPage] = useState(1);
+  const handleChange = (offsetValue, value) => {
+    setPage(value);
+  };
 
   async function fetchData() {
     await axios
-      .get("http://localhost:4000/api/songs/get-tracks")
+      .get(`http://localhost:4000/api/songs/get-tracks?offset=${2}`)
       .then((response) => {
-        setSongsArray(response.data.details);
+        setSongsArray(response.data.details.rows);
       })
       .catch((error) => {
         console.log(error);
@@ -25,7 +29,7 @@ export default function SongList() {
         <Grid.Row columns={4}>
           {songsArray.map((track) => {
             return (
-              <Grid.Column  key={track.title}>
+              <Grid.Column key={track.title}>
                 <div
                   style={{
                     border: "15px solid  #e0e5e5",
@@ -34,11 +38,10 @@ export default function SongList() {
                     padding: "5px",
                     boxShadow: "2px 2px 8px -3px",
                   }}
-                 
                 >
                   <Image src={photo1} alt="photo1" width="200px" />
                 </div>
-                <p as="h1" >{track.title} </p>
+                <p as="h1">{track.title} </p>
                 {/* buttons */}
                 <Button compact color="orange" size="mini">
                   PLAY NOW
@@ -63,11 +66,13 @@ export default function SongList() {
           margin: "auto",
           marginLeft: "33%",
         }}
-        defaultActivePage={5}
+        defaultActivePage={page}
+        onChange={handleChange}
         ellipsisItem={{
           content: <Icon name="ellipsis horizontal" />,
           icon: true,
         }}
+        variant="outlined"
         firstItem={{ content: <Icon name="angle double left" />, icon: true }}
         lastItem={{ content: <Icon name="angle double right" />, icon: true }}
         prevItem={{ content: <Icon name="angle left" />, icon: true }}
