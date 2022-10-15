@@ -2,6 +2,13 @@ import React, { Component } from "react";
 import {Menu, Button, Segment,Image } from "semantic-ui-react";
 import ExceptionalLogo from "../Asserts/Logo.png";
 
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ParentNav from "./ParentNav";
+import Home from "./Home";
+import NoPage from "./NoPage";
+import SongList from "./SongList";
+import Playing from "./Playing";
+
 export default class MenuExampleSecondary extends Component {
   state = { activeItem: "home" };
 
@@ -14,30 +21,8 @@ export default class MenuExampleSecondary extends Component {
       <>
       <div>
       <Segment secondary >
-        <Menu secondary  style={{height:"80px"}}>
-          <Menu.Item
-            icon="bars"
-            active={activeItem === "bars"}
-            onClick={this.handleItemClick}
-          ></Menu.Item>
-          <Menu.Item
-            icon="search"
-            active={activeItem === "search"}
-            onClick={this.handleItemClick}
-          />
-          <Menu.Item
-            active={activeItem === "button"}
-            onClick={this.handleItemClick}
-          >
-            <Button color="orange" compact size="mini">
-              HOME
-            </Button>
-          </Menu.Item>
-          <Menu.Menu position="right">
-            <Menu.Item />
-            <Image src={ExceptionalLogo} alt="ExceptionalLogo" width="300px" height="300px" style={{marginTop:"-120px"}} />
-          </Menu.Menu>
-        </Menu>
+  
+        
       </Segment>
       </div>
       

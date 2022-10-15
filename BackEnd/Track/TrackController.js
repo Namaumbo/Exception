@@ -1,3 +1,4 @@
+
 const Track = require("../models/track");
 
 exports.listFiles = async (req, res) => {
@@ -27,3 +28,23 @@ exports.listFiles = async (req, res) => {
       });
     });
 };
+
+exports.findTrack = async(req,res)=>{
+const title = req.params
+  const track = Track.findOne({
+    where:{
+      title
+    }
+  });
+  track.then(res=>{
+    if (!res) {
+      res.status(401).send({
+        message: [],
+      });
+    }
+    res.status(200).json({
+      message: success,
+      details: Track,
+    });
+  })
+}

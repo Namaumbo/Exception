@@ -223,7 +223,6 @@ export default function AdminPanel() {
             indicating
             size="small"
             color="green"
-            progress
           />
         </Card>
         \

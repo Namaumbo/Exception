@@ -1,17 +1,31 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Grid, Button, Image } from "semantic-ui-react";
 import photo1 from "../Asserts/photo1.jpg";
 import Pagination from "./Pagination";
+import "./songlist.css";
+import { atom, useRecoilState} from "recoil";
+
+//you have to have 2 atoms with unique key here and the sharing componet
+const activeTrackUrl= atom({
+  key: "activeUrl",
+  default:""
+});
 
 export default function SongList() {
   const [songsArray, setSongsArray] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [tracksPerPage] = useState(4);
+  const indexOfLastTrack = currentPage * tracksPerPage;
+  const indexOfFirstTrack = indexOfLastTrack - tracksPerPage;
+  const currentTracks = songsArray.slice(indexOfFirstTrack, indexOfLastTrack);
 
-  const handleChange = (offsetValue, value) => {
-    setCurrentPage(value);
-  };
+  const [activeTrack, setActiveTrack] = useRecoilState(activeTrackUrl);
+
+  function getActiveUrl(value) {
+   setActiveTrack(value)
+  }
 
   async function fetchData() {
     await axios
@@ -27,10 +41,6 @@ export default function SongList() {
     fetchData();
   }, ["http://localhost:4000/api/songs/get-tracks"]);
 
-  const indexOfLastTrack = currentPage * tracksPerPage;
-  const indexOfFirstTrack = indexOfLastTrack - tracksPerPage;
-  const currentTracks = songsArray.slice(indexOfFirstTrack, indexOfLastTrack);
-
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   return (
     <>
@@ -38,27 +48,39 @@ export default function SongList() {
         <Grid.Row columns={4}>
           {currentTracks.map((track) => {
             return (
-              <Grid.Column key={track.title}>
-                <div
-                  style={{
-                    border: "15px solid  #e0e5e5",
-                    borderRadius: "20px",
-                    width: "200px",
-                    padding: "5px",
-                    boxShadow: "2px 2px 8px -3px",
-                  }}
-                >
-                  <Image src={photo1} alt="photo1" width="200px" />
-                </div>
-                <p as="h1">{track.title} </p>
-                {/* buttons */}
-                <Button compact color="orange" size="mini">
-                  PLAY NOW
-                </Button>
-                <Button compact color="orange" size="mini">
-                  DOWNLOAD NOW
-                </Button>
-              </Grid.Column>
+              <>
+                <Grid.Column key={track.title}>
+                  <div
+                    style={{
+                      border: "15px solid  #e0e5e5",
+                      borderRadius: "20px",
+                      width: "200px",
+                      padding: "5px",
+                      boxShadow: "2px 2px 8px -3px",
+                    }}
+                  >
+                    <Image src={photo1} alt="photo1" width="200px" />
+                  </div>
+                  <p className="song-title">{track.title}- </p>
+                  {/* buttons */}
+                  <Link to={track.title}>
+                    <Button
+                      compact
+                      color="orange"
+                      size="mini"
+                      onClick={() => getActiveUrl(track.title)}
+                    >
+                      PLAY NOW
+                    </Button>
+                  </Link>
+
+                  <Link to={track.url}>
+                    <Button compact color="orange" size="mini">
+                      DOWNLOAD NOW
+                    </Button>
+                  </Link>
+                </Grid.Column>
+              </>
             );
           })}
         </Grid.Row>
@@ -70,6 +92,7 @@ export default function SongList() {
           marginRight: "250px",
         }}
       />
+
       <Pagination
         postsPerPage={tracksPerPage}
         totalPosts={songsArray.length}
