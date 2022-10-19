@@ -5,12 +5,15 @@ import { Grid, Button, Image } from "semantic-ui-react";
 import photo1 from "../Asserts/photo1.jpg";
 import Pagination from "./Pagination";
 import "./songlist.css";
-import { atom, useRecoilState} from "recoil";
+import { atom, useRecoilState } from "recoil";
 
 //you have to have 2 atoms with unique key here and the sharing componet
-const activeTrackUrl= atom({
+const activeTrackUrl = atom({
   key: "activeUrl",
-  default:""
+  default:{
+    url:"",
+    downloadUrl:""
+  },
 });
 
 export default function SongList() {
@@ -21,10 +24,11 @@ export default function SongList() {
   const indexOfFirstTrack = indexOfLastTrack - tracksPerPage;
   const currentTracks = songsArray.slice(indexOfFirstTrack, indexOfLastTrack);
 
-  const [activeTrack, setActiveTrack] = useRecoilState(activeTrackUrl);
+  const [{url,downloadUrl},setTrackInfo] = useRecoilState(activeTrackUrl);
 
-  function getActiveUrl(value) {
-   setActiveTrack(value)
+  function getActiveUrl(url,downloadUrl) {
+
+    setTrackInfo({url,downloadUrl});
   }
 
   async function fetchData() {
@@ -68,7 +72,7 @@ export default function SongList() {
                       compact
                       color="orange"
                       size="mini"
-                      onClick={() => getActiveUrl(track.title)}
+                      onClick={() => getActiveUrl(track.title,track.url)}
                     >
                       PLAY NOW
                     </Button>

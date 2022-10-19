@@ -7,39 +7,41 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Components/Home";
 import NoPage from "./Components/NoPage";
 import ParentNav from "./Components/ParentNav";
-import { useRecoilState ,atom} from "recoil";
-
-
+import Login from "./Components/Login"
+import { useRecoilState, atom } from "recoil";
 
 function App() {
-
   // you have to re0define the atom here and the sharing componet
-  const activeTrack = atom({
+  const activeTrackUrl = atom({
     key: "activeUrl",
-    default: "",
-  
+    default:{
+      url:"",
+      downloadUrl:""
+    },
   });
 
-  const [activeTrackUrl] = useRecoilState(activeTrack)
+  const [{url,downloadUrl},setTrackInfo] = useRecoilState(activeTrackUrl);
 
   return (
     <div className="App">
       <>
-      {console.log(activeTrackUrl)}
+        {console.log(url)}
         <BrowserRouter>
           <Routes>
+          <Route exact path="login" element={<Login/>}/>
             <Route path="/" element={<ParentNav />}>
               <Route index element={<Home />} />
-              <Route path="contact" element={<SongList  />} />
-              <Route path={activeTrackUrl} element={<Playing />} />
+              <Route path="/song-list" element={<SongList />} />
+              <Route path={url} element={<Playing />} />
+              <Route path={`/song-list/${url}`} element={<Playing />} />
+              <Route path="admin" element={ <AdminPanel/> }/>
               <Route path="*" element={<NoPage />} />
+              
             </Route>
           </Routes>
         </BrowserRouter>
-        {/* <AdminPanel/> */}
+        
       </>
-
-      <br />
       <br />
       <Footer />
     </div>

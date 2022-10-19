@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import "./player.css";
 import {
   Image,
@@ -10,34 +10,31 @@ import {
   Label,
 } from "semantic-ui-react";
 import photo1 from "../Asserts/photo1.jpg";
-import {atom, useRecoilState} from "recoil"
+import { atom, useRecoilState } from "recoil";
 
-  const activeTrack = atom({
-    key: "activeUrl",
-    default: "",
-  
-  });
+const activeTrackUrl = atom({
+  key: "activeUrl",
+  default:{
+    url:"",
+    downloadUrl:""
+  },
+});
 
-  
 const Playing = () => {
-  const [name , setName] = useRecoilState(activeTrack)
-  alert(name)
-   useEffect(() => {
-    
-       axios
-        .get(`http://localhost:4000/api/songs/get-tracks`)
-        .then((response) => {
-          setSongsArray(response.data.details.rows);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    
-  })
+  const [{url,downloadUrl}, setTrackInfo] = useRecoilState(activeTrackUrl);
 
+  //  useEffect(() => {
 
+  //      axios
+  //       .get(`http://localhost:4000/api/songs/get-tracks`)
+  //       .then((response) => {
+  //         setSongsArray(response.data.details.rows);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
 
-
+  // })
 
   return (
     <>
@@ -45,7 +42,7 @@ const Playing = () => {
         <Segment id="player">
           <Grid columns={2}>
             <Grid.Column>
-              <Label color="orange" floated="left" >
+              <Label color="orange" floated="left">
                 NOW PLAYING
               </Label>
               <br />
@@ -56,13 +53,17 @@ const Playing = () => {
               <br />
               <br />
               <br />
-              <Header as="h4" floated="left">
-                Servant (2022)
+              <Header as="h2" floated="left">
+                {url} (----)
               </Header>
               <br />
               <br />
-              <audio controls style={{ float: "left" }} controlsList="nodownload noplaybackrate">
-                {/* <source src={} /> */}
+              <audio
+                controls
+                style={{ float: "left" }}
+                controlsList="nodownload noplaybackrate"
+              >
+                <source src={downloadUrl} />
               </audio>
             </Grid.Column>
             <Grid.Column>
@@ -77,13 +78,19 @@ const Playing = () => {
           </Grid>
         </Segment>
         <Header as="h2" id="player-details" floated="left">
-          Playing-Servant
+          {url}- <span>statistics</span>
         </Header>
         <br />
         <br />
-        <Header as="h5" floated="left" style={{ marginLeft: "-308px" }}>
-          <Icon name="download"></Icon>233
-        </Header>
+        <div>
+          <Icon
+            name="download"
+            size="big"
+            style={{ marginLeft: "-13em" }}
+          ></Icon>
+          0<Icon name="share" size="big"></Icon>0
+        </div>
+
         <br />
         <br />
         <Button

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Link, Outlet } from "react-router-dom";
-import { Menu, Button, Segment, Image } from "semantic-ui-react";
+import { Menu, Button, Segment, Icon } from "semantic-ui-react";
 import ExceptionalLogo from "../Asserts/Logo.png";
+import "./parentNav.css";
 
 export default class ParentNav extends Component {
   state = { activeItem: "home" };
@@ -15,17 +16,29 @@ export default class ParentNav extends Component {
         <Segment secondary>
           <>
             <Menu secondary style={{ height: "80px" }}>
-              <Link to="/blogs"  >
+              <Link
+                to="/blogs"
+                style={{
+                  textDecoration: "none",
+                  marginTop: "1em",
+                  fontSize: "18px",
+                }}
+              >
                 <Menu.Item
-                  icon="bars"
                   active={activeItem === "bars"}
                   onClick={this.handleItemClick}
-                ></Menu.Item>
+                >
+                  <Icon name="search"></Icon>
+                </Menu.Item>
               </Link>
 
-              <Link to="/contact">
+              <Link to="/song-list" style={{
+                  textDecoration: "none",
+                  marginTop: "1em",
+                  fontSize: "18px",
+                }}>
                 <Menu.Item
-                  icon="search"
+                  icon="list"
                   active={activeItem === "search"}
                   onClick={this.handleItemClick}
                 />
@@ -45,13 +58,16 @@ export default class ParentNav extends Component {
               </Menu.Item>
               <Menu.Menu position="right">
                 <Menu.Item />
-                <Image
-                  src={ExceptionalLogo}
-                  alt="ExceptionalLogo"
-                  width="300px"
-                  height="300px"
-                  style={{ marginTop: "-120px" }}
-                />
+                <Link to="/login">
+                  <img
+                    src={ExceptionalLogo}
+                    alt="ExceptionalLogo"
+                    width="300px"
+                    height="300px"
+                    className="logo"
+                    style={{ marginTop: "-120px" }}
+                  />
+                </Link>
               </Menu.Menu>
             </Menu>
           </>
