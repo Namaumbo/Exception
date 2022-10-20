@@ -32,7 +32,7 @@ export default class ParentNav extends Component {
                 </Menu.Item>
               </Link>
 
-              <Link to="/song-list" style={{
+              <Link to="/song-list/" style={{
                   textDecoration: "none",
                   marginTop: "1em",
                   fontSize: "18px",

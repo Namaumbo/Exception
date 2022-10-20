@@ -20,21 +20,21 @@ function App() {
     },
   });
 
-  const [{url,downloadUrl},setTrackInfo] = useRecoilState(activeTrackUrl);
+  const [{url}] = useRecoilState(activeTrackUrl);
 
   return (
     <div className="App">
       <>
-        {console.log(url)}
+      {/* <AdminPanel/>  */}
         <BrowserRouter>
           <Routes>
-          <Route exact path="login" element={<Login/>}/>
+          <Route exact path="/login/" element={<Login/>}/>
             <Route path="/" element={<ParentNav />}>
               <Route index element={<Home />} />
-              <Route path="/song-list" element={<SongList />} />
+              <Route exact path="/song-list/" element={<SongList />} />
               <Route path={url} element={<Playing />} />
               <Route path={`/song-list/${url}`} element={<Playing />} />
-              <Route path="admin" element={ <AdminPanel/> }/>
+              <Route path="/admin/" element={ <AdminPanel/> }/>
               <Route path="*" element={<NoPage />} />
               
             </Route>
